@@ -10,12 +10,12 @@ router.get('/', (req,res)=>{
 
 router.post('/api/products', (req,res)=>{
     products.add(req.body)
-    console.log(products.getAll())
     res.redirect('/')
 })
 
 router.get('/products', (req, res) => {
     res.render('products', { products: products.getAll() })
   })
+
 
 export {router}
