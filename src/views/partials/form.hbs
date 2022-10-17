@@ -1,18 +1,20 @@
-<form action="api/products" method="post" class="container col-sm-8">
+<form action="/api/products" method="post" class="container col-sm-8">
 
   <div class="mb-3">
     <label for="name" class="form-label">Producto</label>
-    <input type="text" class="form-control" id="name" aria-describedby="emailHelp" required>
-  </div>
+    <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" required>
+  </div> 
+  
+  {{!-- para recordar: los input precisan del atributo name:"" para identificarlos, no del id!!!!!!! --}}
 
   <div class="mb-3">
     <label for="price" class="form-label">Precio</label>
-    <input type="text" class="form-control" id="price" aria-describedby="emailHelp" required>
+    <input type="text" class="form-control" id="price" name="price" aria-describedby="emailHelp" required>
   </div>
 
   <div class="mb-3">
     <label for="img" class="form-label">URL FOTO</label>
-    <input type="text" class="form-control" id="img" aria-describedby="emailHelp" required>
+    <input type="text" class="form-control" id="img" name="img" aria-describedby="emailHelp" required>
   </div>
 
   <button type="submit" class="btn btn-primary">Cargar Producto</button>
