@@ -4,6 +4,8 @@ import {engine} from 'express-handlebars'
 import { Server } from 'socket.io'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { Products } from './src/components/Products.js'
+import fs from 'fs'
 
 const app = express()
 
@@ -24,20 +26,28 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(__dirname+'/public'))
 
 const PORT = process.env.PORT || 8080
-const server = app.listen(PORT, ()=>console.log(`Server ready on port ${8080}`))
+const server = app.listen(PORT, ()=>console.log(`Server ready on port ${PORT}`))
 
 const io = new Server(server)
 
-let log = []
+
 //levantar socket del servidor
-io.on ("connection", (socket) =>{
-    console.log("nuevo cliente socket conectado", socket.id)
+const historicoMensajes = [];
 
-    socket.emit("messageFromServer", "conexion exitosa")
-
-    socket.on("letras", (dataDelCliente)=>{
-        console.log(dataDelCliente)
+io.on("connection",(socket)=>{
+    console.log("nuevo usuario conectado", socket.id);
+    socket.broadcast.emit("newUser");
+    socket.emit("historico",historicoMensajes)
+    socket.on("message",data=>{
+        console.log(data);
+        historicoMensajes.push(data);
+        fs.writeFileSync('./messages.txt', JSON.stringify(historicoMensajes))
+        io.sockets.emit("historico",historicoMensajes);
+    })
+    socket.on("newProduct", newProduct=>{
+        Products.push(newProduct)
+        fs.writeFileSync('/products.txt', JSON.stringify(Products))
+        io.sockets.emit("tableData", Products)
     })
 })
-
 
