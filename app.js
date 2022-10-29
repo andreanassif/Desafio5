@@ -17,24 +17,22 @@ app.engine('hbs', engine({extname: 'hbs'}))
 app.set('view engine', 'hbs')
 app.set('views', './src/views')
 
-
-app.use('/api/productos', routerProducts)
-app.use('/api/carrito', routerCart)
-
-
-
+//app.use('/static', express.static('public'))
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(__dirname+'/public'))
+console.log(__dirname) 
 
-const PORT = process.env.PORT || 8080
+app.use('/', routerProducts)
+//app.use('/products', routerProducts)
+//app.use('/cart', routerCart)
+
+//app.use(express.static('public'))
+const PORT = process.env.PORT || 8081
 const server = app.listen(PORT, ()=>console.log(`Server ready on port ${PORT}`))
 
 
 const io = new Server(server)
-
-
-
 
 //levantar socket del servidor
 const historicoMensajes = [];

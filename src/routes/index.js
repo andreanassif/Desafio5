@@ -17,15 +17,15 @@ const verificarRol = (req,res,next)=>{
     }
 }
 
-routerProducts.get('/', async (req,res)=>{
-    const list = await data.getAll()
+routerProducts.get('/', (req,res)=>{
+    const list = products.getAll()
     res.render('products', {products:list})
 })
 
 
-routerProducts.get('/:id', async (req,res)=>{
+routerProducts.get('/:id', (req,res)=>{
     const {id} =req.params
-    const prod = await data.getById(id)
+    const prod = products.getById(id)
 
     if(prod){
         res.render('prod',{producto:prod})
@@ -37,44 +37,26 @@ routerProducts.get('/:id', async (req,res)=>{
 })
 
 
-routerProducts.post('/', verificarRol, async (req,res)=>{
+routerProducts.post('/', verificarRol, (req,res)=>{
     const newProduct = products.add(req.body)
-    await data.save(newProduct)
-
-    if(rol === "admin"){
-        res.send(data)
-    }else{
-        return res.json({
-            message: "no tienes acceso a esta ruta"
-        })
-    }
+    products.save(newProduct)
+        res.send(products)
+    
 })
 
-routerProducts.put('/:id', verificarRol, async (req,res)=>{
+routerProducts.put('/:id', verificarRol,  (req,res)=>{
     const {id} =req.params
     const modificacion = req.body
-
-    if(rol === "admin"){
-        const prod = await data.getById(id, modificacion)
-        res.send(prod)
-    }else{
-        return res.json({
-            message: "no tienes acceso  esta ruta"
-        })
-    }
+   
+    const prod = products.getById(id, modificacion)
+    res.send(prod)
+    
 })
 
-routerProducts.delete('/:id', verificarRol, async (req,res)=>{
+routerProducts.delete('/:id', verificarRol, (req,res)=>{
     const {id} = req.params
-
-    if(rol === "admin"){
-        const prod = await data.delete(id)
-        res.send(prod)
-    }else{
-        return res.json({
-            message: "no tienes acceso  esta ruta"
-        })
-    }
+        const prod = products.delete(id)
+        res.send(prod) 
 })
 
 

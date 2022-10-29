@@ -12,9 +12,9 @@
         <tbody id="detalleProducto">
             {{#each cart}}
                 <tr>
-                    <td>{{pedido.name}}</td>
-                    <td>{{pedido.price}}</td>
-                    <td><img src="{{pedido.img}}" alt="{{pedido.name}}"> </td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.price}}</td>
+                    <td><img src="{{this.img}}" alt="{{this.name}}"> </td>
                 </tr>
             {{/each}}
         </tbody>
