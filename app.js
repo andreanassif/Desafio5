@@ -1,5 +1,6 @@
 import express from 'express'
-import {router} from './src/routes/index.js'
+import {routerProducts} from './src/routes/index.js'
+import {routerCart} from './src/routes/routerCart.js'
 import {engine} from 'express-handlebars'
 import { Server } from 'socket.io'
 import path from 'path'
@@ -17,7 +18,8 @@ app.set('view engine', 'hbs')
 app.set('views', './src/views')
 
 
-app.use('/', router)
+app.use('/api/productos', routerProducts)
+app.use('/api/carrito', routerCart)
 
 
 
@@ -28,7 +30,10 @@ app.use(express.static(__dirname+'/public'))
 const PORT = process.env.PORT || 8080
 const server = app.listen(PORT, ()=>console.log(`Server ready on port ${PORT}`))
 
+
 const io = new Server(server)
+
+
 
 
 //levantar socket del servidor

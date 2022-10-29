@@ -1,0 +1,23 @@
+<div>
+    <h2>mi carrito</h2>
+    {{#if cart}}
+    <table class="table table-striped-columns">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>FOTO</th>
+        </tr>
+        </thead>
+        <tbody id="detalleProducto">
+            {{#each cart}}
+                <tr>
+                    <td>{{pedido.name}}</td>
+                    <td>{{pedido.price}}</td>
+                    <td><img src="{{pedido.img}}" alt="{{pedido.name}}"> </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{/if}}
+</div>
